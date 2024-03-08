@@ -1,7 +1,4 @@
-import play.core.PlayVersion
-import play.sbt.PlayImport._
-import sbt.Keys.libraryDependencies
-import sbt._
+import sbt.*
 
 object AppDependencies {
 
@@ -14,9 +11,8 @@ object AppDependencies {
   )
 
   val test = Seq(
-    "uk.gov.hmrc"             %% "bootstrap-test-play-30"     % bootstrapVersion            % Test,
-    
-    "org.jsoup"               %  "jsoup"                      % "1.13.1"            % Test,
+    "uk.gov.hmrc"             %% "bootstrap-test-play-30"     % bootstrapVersion    % Test,
+    "org.jsoup"               %  "jsoup"                      % "1.13.1"            % Test
   )
 
   val it = Seq.empty
