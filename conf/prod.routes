@@ -1,3 +1,4 @@
 # Add all the application routes to the app.routes file
-->         /credential-management-frontend              app.Routes
+->         /credential-management     app.Routes
+
 ->         /                          health.Routes
