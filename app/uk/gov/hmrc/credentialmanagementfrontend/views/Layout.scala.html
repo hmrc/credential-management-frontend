@@ -15,14 +15,14 @@
  *@
 
 @import uk.gov.hmrc.credentialmanagementfrontend.config.AppConfig
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcStandardPage
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcStandardPage, HmrcTimeoutDialogHelper}
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.{HmrcStandardPageParams, TemplateOverrides}
 
-@this(
-        appConfig: AppConfig,
-        hmrcStandardPage: HmrcStandardPage
-)
+
+@this(appConfig: AppConfig,
+      hmrcStandardPage: HmrcStandardPage,
+      hmrcTimeoutDialogHelper : HmrcTimeoutDialogHelper)
 
 @(pageTitle: String, backLink: Option[BackLink] = None, formErrors: Seq[FormError] = Seq.empty)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
 
@@ -35,10 +35,15 @@
     }
 }
 
+@additionalHead = {
+    @hmrcTimeoutDialogHelper(signOutUrl = appConfig.basGatewayFrontendUrl + "/sign-out-without-state")
+}
+
 @hmrcStandardPage(
   HmrcStandardPageParams(
     pageTitle = pageTitleWithError,
     isWelshTranslationAvailable = appConfig.welshLanguageSupportEnabled,
+    templateOverrides = TemplateOverrides(additionalHeadBlock = Some(additionalHead)),
     backLink = if(backLink.nonEmpty) backLink else None
   )
 )(contentBlock)
