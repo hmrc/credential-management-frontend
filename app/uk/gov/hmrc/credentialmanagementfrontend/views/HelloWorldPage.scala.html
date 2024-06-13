@@ -14,11 +14,13 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.credentialmanagementfrontend.views.html.Layout
+
 @this(layout: Layout)
 
 @()(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = Some("credential-management-frontend")) {
+@layout(pageTitle = "credential-management-frontend") {
     <h1 class="govuk-heading-xl">credential-management-frontend</h1>
     <p class="govuk-body">@{messages("service.text")}</p>
 }

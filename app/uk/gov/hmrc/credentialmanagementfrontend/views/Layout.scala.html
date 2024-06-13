@@ -16,18 +16,30 @@
 
 @import uk.gov.hmrc.credentialmanagementfrontend.config.AppConfig
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcStandardPage
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
 
 @this(
         appConfig: AppConfig,
         hmrcStandardPage: HmrcStandardPage
 )
-@(pageTitle: Option[String] = None)(contentBlock: Html)(implicit request: Request[_], messages: Messages)
+
+@(pageTitle: String, backLink: Option[BackLink] = None, formErrors: Seq[FormError] = Seq.empty)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
+
+@pageTitleWithError = @{
+    if(formErrors.nonEmpty){
+        Some(messages("error.prefix") + ": " + pageTitle)
+    }
+    else {
+        Some(pageTitle)
+    }
+}
 
 @hmrcStandardPage(
   HmrcStandardPageParams(
-    pageTitle = pageTitle,
-    isWelshTranslationAvailable = appConfig.welshLanguageSupportEnabled
+    pageTitle = pageTitleWithError,
+    isWelshTranslationAvailable = appConfig.welshLanguageSupportEnabled,
+    backLink = if(backLink.nonEmpty) backLink else None
   )
 )(contentBlock)
 

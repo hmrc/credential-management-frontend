@@ -18,10 +18,14 @@ package uk.gov.hmrc.credentialmanagementfrontend.config
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.test.FakeRequest
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.twirl.api.Html
+
+import scala.concurrent.Future
 
 class ErrorHandlerSpec extends AnyWordSpec
   with Matchers
@@ -41,8 +45,9 @@ class ErrorHandlerSpec extends AnyWordSpec
 
   "standardErrorTemplate" should {
     "render HTML" in {
-      val html = handler.standardErrorTemplate("title", "heading", "message")(fakeRequest)
-      html.contentType shouldBe "text/html"
+      val html: Future[Html] = handler.standardErrorTemplate("title", "heading", "message")(fakeRequest)
+
+      assert(html.futureValue.contentType === "text/html")
     }
   }
 
