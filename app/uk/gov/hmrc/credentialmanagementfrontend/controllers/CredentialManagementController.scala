@@ -18,7 +18,6 @@ package uk.gov.hmrc.credentialmanagementfrontend.controllers
 
 import play.api.Logging
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.credentialmanagementfrontend.models.OlfgJourneyId
 import uk.gov.hmrc.credentialmanagementfrontend.views.html.SignInDetailsPage
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
@@ -29,8 +28,8 @@ class CredentialManagementController @Inject()(mcc: MessagesControllerComponents
                                                signInDetailsPage: SignInDetailsPage)
   extends FrontendController(mcc) with Logging {
 
-  def signInDetails(olfgJourneyId: OlfgJourneyId): Action[AnyContent] = Action { implicit request =>
-    Ok(signInDetailsPage(olfgJourneyId))
+  def signInDetails(): Action[AnyContent] = Action { implicit request =>
+    Ok(signInDetailsPage())
   }
 
 }

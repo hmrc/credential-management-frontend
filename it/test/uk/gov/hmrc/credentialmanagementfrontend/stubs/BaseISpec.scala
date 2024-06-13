@@ -32,8 +32,7 @@ trait BaseISpec extends AnyWordSpec
   with IntegrationPatience
   with GuiceOneServerPerSuite
   with BeforeAndAfterAll
-  with BeforeAndAfterEach
-  with TestData {
+  with BeforeAndAfterEach {
 
   val baseUrl  = s"http://localhost:$port/credential-management"
 

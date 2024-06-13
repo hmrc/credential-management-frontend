@@ -15,7 +15,6 @@
  *@
 
 @import uk.gov.hmrc.credentialmanagementfrontend.views.html.Layout
-@import uk.gov.hmrc.credentialmanagementfrontend.models.OlfgJourneyId
 @import uk.gov.hmrc.govukfrontend.views.html.components.{GovukSummaryList, SummaryList}
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcPageHeading
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.pageheading.PageHeading
@@ -28,7 +27,7 @@
         govukSummaryList: GovukSummaryList
 )
 
-@(olfgJourneyId: OlfgJourneyId)(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = messages("sign.in.details.title"), backLink = None) {
     @heading(PageHeading(messages("sign.in.details.heading")))

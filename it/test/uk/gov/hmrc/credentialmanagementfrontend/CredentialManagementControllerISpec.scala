@@ -16,15 +16,8 @@
 
 package uk.gov.hmrc.credentialmanagementfrontend
 
-import ch.qos.logback.classic.Level
-import play.api.Logger
-import play.api.libs.ws.DefaultWSCookie
-import play.api.test.Helpers.LOCATION
 import uk.gov.hmrc.credentialmanagementfrontend.stubs.BaseISpec
 import uk.gov.hmrc.play.bootstrap.tools.LogCapturing
-
-import java.net.URLEncoder
-import scala.util.Random
 
 class CredentialManagementControllerISpec extends BaseISpec with LogCapturing {
 
@@ -32,7 +25,7 @@ class CredentialManagementControllerISpec extends BaseISpec with LogCapturing {
     "respond with 200 status" in {
       val response =
         wsClient
-          .url(s"$baseUrl/sign-in-details?olfgJourneyId=${olfgJourneyId.toString}")
+          .url(s"$baseUrl/sign-in-details")
           .get()
           .futureValue
 
