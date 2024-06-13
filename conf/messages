@@ -1,2 +1,13 @@
 service.name = credential-management-frontend
 service.text = This is your new service
+
+sign.in.details.title = GOV.UK One Login - View and manage your sign in details
+sign.in.details.heading = View and manage your sign in details
+sign.in.details.r1.dt = GOV.UK One Login
+sign.in.details.r1.dd = The email address and password you use to sign in with GOV.UK One Login
+sign.in.details.r1.a = Change
+sign.in.details.r1.s = Third-party software
+sign.in.details.r2.dt = Third-party software sign in details
+sign.in.details.r2.dd = Further information for third-party software users to help connect their software
+sign.in.details.r2.a = Manage
+sign.in.details.r2.s = Third-party Software sign in details
