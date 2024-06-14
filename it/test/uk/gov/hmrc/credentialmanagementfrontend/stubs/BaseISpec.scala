@@ -47,8 +47,7 @@ trait BaseISpec extends AnyWordSpec
       .build()
 
   def servicesConfig: Map[String, String] = Map(
-    "play.http.router" -> "testOnlyDoNotUseInAppConf.Routes"
-  )
+    "play.http.router" -> "testOnlyDoNotUseInAppConf.Routes")
 
   override implicit lazy val app: Application = new GuiceApplicationBuilder()
     .in(Environment.simple(mode = Mode.Dev))

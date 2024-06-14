@@ -18,6 +18,7 @@ package uk.gov.hmrc.credentialmanagementfrontend.controllers
 
 import play.api.Logging
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.credentialmanagementfrontend.config.AppConfig
 import uk.gov.hmrc.credentialmanagementfrontend.views.html.SignInDetailsPage
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
@@ -25,11 +26,17 @@ import javax.inject.{Inject, Singleton}
 
 @Singleton
 class CredentialManagementController @Inject()(mcc: MessagesControllerComponents,
-                                               signInDetailsPage: SignInDetailsPage)
+                                               signInDetailsPage: SignInDetailsPage,
+                                               appConfig:AppConfig)
   extends FrontendController(mcc) with Logging {
 
   def signInDetails(): Action[AnyContent] = Action { implicit request =>
-    Ok(signInDetailsPage())
+    println(s"appConfig.signInDetailsEnabled = ${appConfig.signInDetailsEnabled}")
+    if (appConfig.signInDetailsEnabled) {
+      Ok(signInDetailsPage())
+    } else {
+      NotImplemented
+    }
   }
 
 }

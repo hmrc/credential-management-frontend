@@ -25,5 +25,7 @@ import javax.inject.{Inject, Singleton}
 class AppConfig @Inject()(config: Configuration, servicesConfig: ServicesConfig) {
   val welshLanguageSupportEnabled: Boolean = config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
 
+  val signInDetailsEnabled: Boolean = config.getOptional[Boolean]("features.sign-in-details").getOrElse(true)
+
   lazy val basGatewayFrontendUrl: String = servicesConfig.getConfString("bas-gateway-frontend.baseUrl", "") + "/bas-gateway"
 }
