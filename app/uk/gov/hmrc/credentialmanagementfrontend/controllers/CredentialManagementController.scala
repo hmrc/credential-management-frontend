@@ -31,7 +31,6 @@ class CredentialManagementController @Inject()(mcc: MessagesControllerComponents
   extends FrontendController(mcc) with Logging {
 
   def signInDetails(): Action[AnyContent] = Action { implicit request =>
-    println(s"appConfig.signInDetailsEnabled = ${appConfig.signInDetailsEnabled}")
     if (appConfig.signInDetailsEnabled) {
       Ok(signInDetailsPage())
     } else {
