@@ -16,21 +16,26 @@
 
 package uk.gov.hmrc.credentialmanagementfrontend.controllers
 
+import play.api.Logging
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.credentialmanagementfrontend.views.html.HelloWorldPage
+import uk.gov.hmrc.credentialmanagementfrontend.config.AppConfig
+import uk.gov.hmrc.credentialmanagementfrontend.views.html.SignInDetailsPage
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
 
 @Singleton
-class HelloWorldController @Inject()(
-  mcc: MessagesControllerComponents,
-  helloWorldPage: HelloWorldPage)
-    extends FrontendController(mcc) {
+class CredentialManagementController @Inject()(mcc: MessagesControllerComponents,
+                                               signInDetailsPage: SignInDetailsPage,
+                                               appConfig:AppConfig)
+  extends FrontendController(mcc) with Logging {
 
-  val helloWorld: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(helloWorldPage()))
+  def signInDetails(): Action[AnyContent] = Action { implicit request =>
+    if (appConfig.signInDetailsEnabled) {
+      Ok(signInDetailsPage())
+    } else {
+      NotImplemented
+    }
   }
 
 }
