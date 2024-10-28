@@ -18,16 +18,23 @@ package uk.gov.hmrc.credentialmanagementfrontend.controllers
 
 import play.api.Logging
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.credentialmanagementfrontend.config.AppConfig
-import uk.gov.hmrc.credentialmanagementfrontend.views.html.SignInDetailsPage
+import uk.gov.hmrc.credentialmanagementfrontend.config.{AppConfig, ErrorHandler}
+import uk.gov.hmrc.credentialmanagementfrontend.service.CredentialManagementService
+import uk.gov.hmrc.credentialmanagementfrontend.views.html.{GuidanceCreate, GuidanceManage, SignInDetailsPage}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CredentialManagementController @Inject()(mcc: MessagesControllerComponents,
                                                signInDetailsPage: SignInDetailsPage,
-                                               appConfig:AppConfig)
+                                               guidanceCreatePage: GuidanceCreate,
+                                               guidanceManagePage: GuidanceManage,
+                                               credentialManagementService: CredentialManagementService,
+                                               appConfig:AppConfig)(implicit ec: ExecutionContext,
+                                                                    val errorHandler: ErrorHandler,
+)
   extends FrontendController(mcc) with Logging {
 
   def signInDetails(): Action[AnyContent] = Action { implicit request =>
@@ -38,4 +45,37 @@ class CredentialManagementController @Inject()(mcc: MessagesControllerComponents
     }
   }
 
+  def ropcRegister(): Action[AnyContent] = Action(NotImplemented("www.example.com"))
+
+  def legacyLogin(): Action[AnyContent] = Action(NotImplemented("www.example.com"))
+
+  def lostCredsEmail(): Action[AnyContent] = Action(NotImplemented("www.example.com"))
+
+  // If user has gnap token we assumes that this session is a potentially valid ropc User
+  // they will be redirected to the Create page
+  // to see the Manage page the user needs the createdBy value in Account store to be "credential-management-frontend"
+  // TODO change this logic and check the use is allowed to see the created or manage page
+  def guidance(): Action[AnyContent] = Action.async { implicit request =>
+    credentialManagementService.getGnapTokenFromSessionOrHeader match {
+      case Some(gnapToken) =>
+        credentialManagementService.getTokenAttributesForGnapToken(gnapToken).flatMap {
+          case Right(Some(tokenAttributes)) if tokenAttributes.eacdGroupId.isDefined =>
+            credentialManagementService.validRopcEacdUserId(tokenAttributes.eacdGroupId.get).map{ validRopcEacdUserIds =>
+              if(validRopcEacdUserIds.nonEmpty)
+                Ok(guidanceManagePage())
+              else
+                Ok(guidanceCreatePage())
+            }
+          case Right(_) =>
+            logger.warn(s"Failed to get Gnap token attributes or eacdGroupId not defined from Gnap token attributes")
+            errorHandler.handleError(FORBIDDEN)
+          case Left(errorResponseWithStatus) =>
+            logger.error(s"Failed to get token attributes for gnap token: $gnapToken. Error: ${errorResponseWithStatus.errorResponse}")
+            errorHandler.handleError(errorResponseWithStatus.status)
+        }
+      case None =>
+        logger.warn(s"Failed to get gnap token from session or header")
+        errorHandler.handleError(FORBIDDEN)
+    }
+  }
 }

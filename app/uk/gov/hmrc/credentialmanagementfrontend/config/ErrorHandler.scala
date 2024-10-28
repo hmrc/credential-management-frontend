@@ -17,7 +17,8 @@
 package uk.gov.hmrc.credentialmanagementfrontend.config
 
 import play.api.i18n.MessagesApi
-import play.api.mvc.RequestHeader
+import play.api.mvc.Results.{Forbidden, Status}
+import play.api.mvc.{Request, RequestHeader, Result}
 import play.twirl.api.Html
 import uk.gov.hmrc.credentialmanagementfrontend.views.html.ErrorTemplate
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
@@ -33,4 +34,12 @@ class ErrorHandler @Inject()(errorTemplate: ErrorTemplate,
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit request: RequestHeader): Future[Html] =
     Future.successful(errorTemplate(pageTitle, heading, message))
+
+
+  def handleError(status: Int)(implicit request: Request[_]): Future[Result] = {
+    status match {
+      case 403 => fallbackClientErrorTemplate(request).map(Forbidden(_))
+      case _   => internalServerErrorTemplate(request).map(x => new Status(status)(x))
+    }
+  }
 }
