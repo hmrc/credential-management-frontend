@@ -54,7 +54,7 @@ class AuthorisationServerConnector @Inject()(servicesConfig: ServicesConfig, htt
   def getTokenAttributes(gnapToken: String)
                         (implicit hc: HeaderCarrier): Future[Either[ErrorResponseWithStatus, Option[TokenAttributesResponse]]] = {
     httpClient.post(url"$getTokenAttributesUrl")
-      .withBody(Json.toJson(TokenAttributesRequest(gnapToken.replace(s"GNAP ", "").trim)))
+      .withBody(Json.toJson(TokenAttributesRequest(gnapToken.replace("GNAP ", "").trim)))
       .execute[Either[ErrorResponseWithStatus, Option[TokenAttributesResponse]]]
   }
 

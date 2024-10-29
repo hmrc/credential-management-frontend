@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.credentialmanagementfrontend.config
 
+import play.api.http.Status.FORBIDDEN
 import play.api.i18n.MessagesApi
 import play.api.mvc.Results.{Forbidden, Status}
 import play.api.mvc.{Request, RequestHeader, Result}
@@ -38,8 +39,8 @@ class ErrorHandler @Inject()(errorTemplate: ErrorTemplate,
 
   def handleError(status: Int)(implicit request: Request[_]): Future[Result] = {
     status match {
-      case 403 => fallbackClientErrorTemplate(request).map(Forbidden(_))
-      case _   => internalServerErrorTemplate(request).map(x => new Status(status)(x))
+      case FORBIDDEN => fallbackClientErrorTemplate(request).map(Forbidden(_))
+      case _         => internalServerErrorTemplate(request).map(x => new Status(status)(x))
     }
   }
 }

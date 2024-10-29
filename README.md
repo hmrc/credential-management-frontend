@@ -1,7 +1,15 @@
 
 # credential-management-frontend
 
-This is a placeholder README.md for a new repository
+This is the frontend microservice for where the ROPC pages are.
+
+## Endpoints
+
+### Guidance
+
+- **URL**: `/credential-management/guidance`
+- **Method**: GET
+- **Description**: This endpoint provides guidance based on the user's GNAP token for ROPC account management or creation.
 
 ## How to test
 `sbt clean compile coverage test it/test coverageReport`

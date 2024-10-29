@@ -20,6 +20,7 @@ import play.api.Logging
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,6 +32,6 @@ class IdentityProviderAccountContextConnector@Inject()(servicesConfig: ServicesC
   private val getContextUrl: String = s"$baseUrl/identity-provider-account-context/contexts"
 
   def getContextViaEacdGroupId(eacdGroupId: String)(implicit hc: HeaderCarrier): Future[Option[ContextResource]] =
-    httpClient.get(url"$getContextUrl?eacdGroupId=$eacdGroupId").execute[Option[ContextResource]]
+    httpClient.get(url"${getContextUrl + "?eacdGroupId=" + eacdGroupId}").execute[Option[ContextResource]]
 
 }

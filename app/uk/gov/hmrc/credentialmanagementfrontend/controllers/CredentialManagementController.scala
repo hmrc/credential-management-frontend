@@ -67,14 +67,14 @@ class CredentialManagementController @Inject()(mcc: MessagesControllerComponents
                 Ok(guidanceCreatePage())
             }
           case Right(_) =>
-            logger.warn(s"Failed to get Gnap token attributes or eacdGroupId not defined from Gnap token attributes")
+            logger.warn("Failed to get Gnap token attributes or eacdGroupId not defined from Gnap token attributes")
             errorHandler.handleError(FORBIDDEN)
           case Left(errorResponseWithStatus) =>
             logger.error(s"Failed to get token attributes for gnap token: $gnapToken. Error: ${errorResponseWithStatus.errorResponse}")
             errorHandler.handleError(errorResponseWithStatus.status)
         }
       case None =>
-        logger.warn(s"Failed to get gnap token from session or header")
+        logger.warn("Failed to get gnap token from session or header")
         errorHandler.handleError(FORBIDDEN)
     }
   }
