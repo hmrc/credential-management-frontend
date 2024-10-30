@@ -23,15 +23,16 @@ import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import javax.inject.{Inject, Singleton}
+import java.net.URL
+
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class IdentityProviderAccountContextConnector@Inject()(servicesConfig: ServicesConfig, httpClient: HttpClientV2)
                                                       (implicit ec: ExecutionContext) extends Logging {
   private val baseUrl: String = servicesConfig.baseUrl("identity-provider-account-context")
-  private val getContextUrl: String = s"$baseUrl/identity-provider-account-context/contexts"
+  private val getContextViaEacdGroupIdUrl: String = s"$baseUrl/identity-provider-account-context/contexts?eacdGroupId="
 
   def getContextViaEacdGroupId(eacdGroupId: String)(implicit hc: HeaderCarrier): Future[Option[ContextResource]] =
-    httpClient.get(url"${getContextUrl + "?eacdGroupId=" + eacdGroupId}").execute[Option[ContextResource]]
-
+    httpClient.get(new URL(getContextViaEacdGroupIdUrl + eacdGroupId)).execute[Option[ContextResource]]
 }

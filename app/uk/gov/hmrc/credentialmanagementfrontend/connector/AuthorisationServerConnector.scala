@@ -24,6 +24,7 @@ import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import java.net.URL
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -53,7 +54,7 @@ class AuthorisationServerConnector @Inject()(servicesConfig: ServicesConfig, htt
 
   def getTokenAttributes(gnapToken: String)
                         (implicit hc: HeaderCarrier): Future[Either[ErrorResponseWithStatus, Option[TokenAttributesResponse]]] = {
-    httpClient.post(url"$getTokenAttributesUrl")
+    httpClient.post(new URL(getTokenAttributesUrl))
       .withBody(Json.toJson(TokenAttributesRequest(gnapToken.replace("GNAP ", "").trim)))
       .execute[Either[ErrorResponseWithStatus, Option[TokenAttributesResponse]]]
   }
