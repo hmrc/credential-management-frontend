@@ -4,3 +4,7 @@
 GET        /assets/*file            controllers.Assets.versioned(path = "/public", file: Asset)
 
 GET        /sign-in-details         uk.gov.hmrc.credentialmanagementfrontend.controllers.CredentialManagementController.signInDetails
+GET        /guidance                uk.gov.hmrc.credentialmanagementfrontend.controllers.CredentialManagementController.guidance()
+GET        /ropc-register           uk.gov.hmrc.credentialmanagementfrontend.controllers.CredentialManagementController.ropcRegister()
+GET        /legacy-login            uk.gov.hmrc.credentialmanagementfrontend.controllers.CredentialManagementController.legacyLogin()
+GET        /lost-creds-email        uk.gov.hmrc.credentialmanagementfrontend.controllers.CredentialManagementController.lostCredsEmail()

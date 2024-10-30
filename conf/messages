@@ -11,3 +11,23 @@ sign.in.details.r2.dt = Third-party software sign in details
 sign.in.details.r2.dd = Further information for third-party software users to help connect their software
 sign.in.details.r2.a = Manage
 sign.in.details.r2.s = Third-party Software sign in details
+
+
+guidance.title = GOV.UK One Login - Third-party software guidance
+guidance.h1 = Third-party software guidance
+guidance.p1 = You should contact your software provider if you’re:
+guidance.ul1.li1 = unsure how to enter information into your software
+guidance.ul1.li2 = having issues with your software
+guidance.h2 = Connecting your software to HMRC
+guidance.ul2.li1 = your third-party software may ask you to sign in using your Government Gateway user ID and password, for example when you submit your Self Assessment
+guidance.ul2.li2 = your software may also ask you to sign in with your new GOV.UK One Login to complete certain tasks
+guidance.p2 = Your software provider should be able to confirm which sign in details you need.
+
+guidance.create.h1 = Create Government Gateway sign in details
+guidance.create.p1 = If you need Government Gateway details, you can create them below.
+guidance.create.button = Create Government Gateway sign in details
+
+guidance.manage.h1 = Your Government Gateway sign in details
+guidance.manage.p1 = Our records show that you already have Government Gateway sign in details. Look up your user ID and reset your password below:
+guidance.manage.link1 = View and manage my Government Gateway user ID
+guidance.manage.link2 = I have forgotten my Government Gateway password
